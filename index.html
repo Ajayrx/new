@@ -30,7 +30,7 @@
             font-weight: bold;
             color: white;
             text-shadow: 2px 2px 4px rgba(0, 0, 0, 0.8);
-            animation: move-diagonal 8s linear infinite, glow 2s infinite;
+            animation: move-diagonal 8s linear infinite, glow 3s infinite;
             text-align: center;
             width: 100%;
         }
@@ -58,6 +58,13 @@
         window.addEventListener('load', () => {
             const videos = document.querySelectorAll('video');
             videos.forEach(video => video.play());
+
+            // Get the audio element and play it after load
+            const audio = document.querySelector('audio');
+            audio.volume = 0.25;
+            audio.play().catch(error => {
+                console.error('Error playing audio:', error);
+            });
         });
     </script>
 </head>
@@ -79,5 +86,12 @@
     <div class="moving-text">
         Happy New Year 2025
     </div>
+    
+
+    <!-- Background Music -->
+    <audio autoplay loop>
+        <source src="audio/au.mp3" type="audio/mp3">
+        Your browser does not support the audio tag.
+    </audio>
 </body>
 </html>
