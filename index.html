@@ -16,11 +16,11 @@
         }
         .video-container {
             display: flex;
-            gap: 1px;
+            gap: 0px;
         }
         .video-container video {
             width: 100%;
-            max-width: 510px;
+            max-width: 515px;
         }
         .moving-text {
             position: absolute;
@@ -30,9 +30,10 @@
             font-weight: bold;
             color: white;
             text-shadow: 2px 2px 4px rgba(0, 0, 0, 0.8);
-            animation: move-diagonal 8s linear infinite, glow 3s infinite;
+            animation: move-diagonal 9s linear infinite, glow 3s infinite;
             text-align: center;
             width: 100%;
+            z-index: 2;
         }
         @keyframes move-diagonal {
             0% {
@@ -53,32 +54,52 @@
                 text-shadow: 0 0 5px red, 0 0 10px orange, 0 0 15px yellow, 0 0 20px green, 0 0 25px blue, 0 0 30px indigo, 0 0 35px violet;
             }
         }
+        /* Mobile-specific styling */
+        @media (max-width: 768px) {
+            .moving-text {
+                font-size: 6rem;
+            }
+            .video-container {
+                flex-direction: column;
+                gap: 5px;
+            }
+            .video-container video {
+                max-width: 100%;
+                height: auto;
+                aspect-ratio: 16 / 9;
+            }
+        }
     </style>
     <script>
         window.addEventListener('load', () => {
             const videos = document.querySelectorAll('video');
             videos.forEach(video => video.play());
+        });
 
-            // Get the audio element and play it after load
+        // Add event listener to play audio when user clicks/taps anywhere on the page
+        document.addEventListener('click', function playAudio() {
             const audio = document.querySelector('audio');
-            audio.volume = 0.25;
-            audio.play().catch(error => {
-                console.error('Error playing audio:', error);
-            });
+            if (audio) {
+                audio.play().catch(error => {
+                    console.error('Error playing audio:', error);
+                });
+                // Remove the event listener after the first click
+                document.removeEventListener('click', playAudio);
+            }
         });
     </script>
 </head>
 <body>
     <div class="video-container">
-        <video muted>
+        <video muted autoplay loop>
             <source src="nn.mp4" type="video/mp4">
             Your browser does not support the video tag.
         </video>
-        <video muted>
+        <video muted autoplay loop>
             <source src="nm.mp4" type="video/mp4">
             Your browser does not support the video tag.
         </video>
-        <video muted>
+        <video muted autoplay loop>
             <source src="nn.mp4" type="video/mp4">
             Your browser does not support the video tag.
         </video>
@@ -86,10 +107,9 @@
     <div class="moving-text">
         Happy New Year 2025
     </div>
-    
 
     <!-- Background Music -->
-    <audio autoplay loop>
+    <audio loop>
         <source src="audio/au.mp3" type="audio/mp3">
         Your browser does not support the audio tag.
     </audio>
